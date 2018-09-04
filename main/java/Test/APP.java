@@ -27,6 +27,7 @@ public class APP {
         Long start = System.currentTimeMillis();
         testQueryAllColl(md,"other_petn3002");
         System.out.println("用时：" + (System.currentTimeMillis()-start) + "毫秒。");
+        System.out.println();
     }
 
     public static void testQueryOneDoc(MongoDatabase md,String table){
