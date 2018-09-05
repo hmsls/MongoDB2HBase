@@ -24,16 +24,26 @@ public class APP {
     static MongoDBQueryData mq = new MongoDBQueryData();
 
     public static void main(String[] args){
-        Long start = System.currentTimeMillis();
-        testQueryAllColl(md,"other_petn3002");
-        System.out.println("用时：" + (System.currentTimeMillis()-start) + "毫秒。");
-        System.out.println();
+        //查询一个表中的所有文档，然后插入到HBase
+//        Long start = System.currentTimeMillis();
+//        testQueryAllColl(md,"other_petn3002",false);
+//        System.out.println("用时：" + (System.currentTimeMillis()-start) + "毫秒。");
+
+        //测试组装字段，将路径编码组装到字段
+//        mq.getCollectionFieldAndValue(md,"other_petn3002","BD","_id","78ac94b0-14de-4194-a23d-b17f9104fbd2",false);
+//        List<List<Object>> l = mq.fieldsList;
+//        List<List<Object>> ll = UpdateList.updateListElement(l);
+//        for(int i = 0;i<ll.size();i++){
+//            System.out.println(ll.get(i));
+//        }
+        //查询一个文档，然后插入HBase
+        testQueryOneDoc(md,"other_petn3002");
     }
 
     public static void testQueryOneDoc(MongoDatabase md,String table){
         //获取某个表中的所有字段和值，然后通过成员变量fieldsList拿到所有字段，通过更新字段得到加了路径的字段，然后
         //将其插入HBase
-        mq.getCollectionFieldAndValue(md,table,"BD","_id","6204c4aa-6a48-4d33-a308-4562465fea16",true);
+        mq.getCollectionFieldAndValue(md,table,"BD","_id","e7b8cb45-8418-4a8a-9d55-3a71a6e2f1bd",true);
         //得到某个文档的所有字段的列表
         List<List<Object>> res = mq.fieldsList;
         //某个文档把路径的代号加入到每个字段中
@@ -46,19 +56,18 @@ public class APP {
                 String[] fv = ((String)resutl).split("==");
                 fields.add(fv[0]);
                 values.add(fv[1]);
-//                System.out.println(fv[0]);
-//                System.out.println(fv[1]);
+//                System.out.println(fv[0]+"~~~"+fv[1]);
             }
         }
-        InsertData.insertData("mongohbase","row2","cf1",fields,values);
+        InsertData.insertData("mongohbase","row4","cf1",fields,values);
     }
 
-    public static void testQueryAllColl(MongoDatabase md,String table){
+    public static void testQueryAllColl(MongoDatabase md,String table,Boolean fieldValue){
         List<String> idValList = mq.queryAllIdField(md,table);
         for(String idval:idValList){
             //获取某个表中的所有字段和值，然后通过成员变量fieldsList拿到所有字段，通过更新字段得到加了路径的字段，然后
             //将其插入HBase
-            mq.getCollectionFieldAndValue(md,table,"BD","_id",idval,true);
+            mq.getCollectionFieldAndValue(md,table,"BD","_id",idval,fieldValue);
             //得到某个文档的所有字段的列表
             List<List<Object>> res = mq.fieldsList;
             //某个文档把路径的代号加入到每个字段中

@@ -19,106 +19,26 @@ public class UpdateList {
                 if(!first.equals("")){
                     //根据“/”来切割第一个元素
                     String[] arg = first.split("/");
-                    //判断/orgmsg类型
-                    if(arg[1].equals("orgmsg") && (arg.length)==2){
-                        //重新设置元素值
-                        String newOne = "o";
-                        l.set(0,newOne);
-                        for(int i=1;i<l.size();i++){
-                            l.set(i,newOne+"_"+l.get(i));
+                    //创建字段路径前置的字符串
+                    StringBuilder sb = new StringBuilder();
+                    for(int k = 0;k<arg.length;k++){
+                        //如果是数字，则直接拼接上去
+                        if((arg[k]).matches("^[0-9]*$")){
+                            sb.append(arg[k]);
+                        }else{
+                            //选取路径名称的第一个字母以及驼峰命名的大写字母
+                            sb = sb.append(arg[k].charAt(0));
+                            for(int r=1;r<arg[k].length();r++){
+                                char c = arg[k].charAt(r);
+                                if(c >= 'A' && c <= 'Z'){
+                                    sb.append(c);
+                                }
+                            }
                         }
                     }
-                    if(arg.length > 2){
-                        //判断/orgmsg/detailQueryReason类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("detailQueryReason")){
-                            //重新设置元素值
-                            String newOne = "odqr"+arg[3];
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/creditSummaryCue类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("creditSummaryCue")){
-                            //重新设置元素值
-                            String newOne = "ocsc";
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/identity类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("identity")){
-                            //重新设置元素值
-                            String newOne = "oi";
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/messageHeader类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("messageHeader")){
-                            //重新设置元素值
-                            String newOne = "omh";
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/numAnalysis类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("numAnalysis")){
-                            //重新设置元素值
-                            String newOne = "ona";
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/professional/类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("professional")){
-                            //重新设置元素值
-                            String newOne = "op"+arg[3];
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/queryReq类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("queryReq")){
-                            //重新设置元素值
-                            String newOne = "oqr";
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/recordDetail/类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("recordDetail")){
-                            //重新设置元素值
-                            String newOne = "ord"+arg[3];
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/residence/类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("residence")){
-                            //重新设置元素值
-                            String newOne = "or"+arg[3];
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
-                        //判断/orgmsg/spouse/类型
-                        if(arg[1].equals("orgmsg") && arg[2].equals("spouse")){
-                            //重新设置元素值
-                            String newOne = "os"+arg[3];
-                            l.set(0,newOne);
-                            for(int i=1;i<l.size();i++){
-                                l.set(i,newOne+"_"+l.get(i));
-                            }
-                        }
+                    //为这个路径下的所有字段添加路径前缀
+                    for(int i=1;i<l.size();i++){
+                        l.set(i,sb.toString()+"_"+l.get(i));
                     }
                 }
             }
