@@ -57,6 +57,7 @@ public class MongoDBQueryData /*implements MongoDAO*/ extends MongoDBUtil{
 	/**
 	 * 通过递归的方法，把一个文档中的所有的字段都放到一个列表里，这个列表是嵌套的list，里面的list放各个子节点的字段
 	 *	获得一个文档中的所有的字段，并且获得相同层级的字段的路径
+	 * @param fieldPath    这个是所有字段的根路径，可以设置为空，也可以设置为/，建议为空，否则前面会多一个/字符
 	 * @param documentMap  递归的文档map
 	 * @param fieldValue	是否要获取值
 	 */
